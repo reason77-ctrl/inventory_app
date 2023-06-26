@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+<div class="container prod">
+  <div class="row row-cols-2 row-cols-md-3 g-4">
+    <div class="col-md-4">
+      <nav class="navbar bg-light">
+        <ul class="navbar-nav">
+          {% for category, items in items_by_category.items %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'home:category_detail' category.id %}"><i class="fas fa-{{category.fa_image}}"></i>
+              {{category.title}}</a>
+          </li>
+          {% endfor %}
+        </ul>
+      </nav>
+    </div>
+
+    
+
+
+    {% for product in products %}
+    <h2>{{product.categories.title}}</h2>
+    <div class="col-md-3">
+      <div class="card h-100">
+        <img src="{{product.image.url}}" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">{{product.title}}</h5>
+          <p class="card-text">{{product.description}}</p>
+          <form method="POST" action="{% url 'home:add_qty' %}">
+          {% csrf_token %}
+          <div class="d-flex mb-4" style="max-width: 200px">
+            
+            
+            <input type="hidden" name="product_id" value="{{product.id}}" class="prod_id">
+            <button type="submit" name="decrement" class="btn btn-primary px-3 me-2">
+              <i class="fas fa-minus"></i>
+            </button>
+            <div class="form-outline">
+              <input min="0" name="added_qty" value="{{product.quantity}}" type="number" class="form-control" />
+              <label class="form-label" for="form1">Quantity</label>
+            </div>
+            
+            <button type="submit" name="increment" class="btn btn-primary px-3 ms-2">
+              <i class="fas fa-plus"></i>
+            </button>
+            {% comment %} {% if user.is_authenticated %}
+            <div class="card-title">
+              <button type="submit" class="btn btn-primary px-3 ms-2">Add</button>
+            </div>
+            {% endif %} {% endcomment %}
+          </div>
+          
+          </form>
+          <h6 class="card-title">Quantity: {{product.quantity}}</h5>
+            <h6 class="card-title">Price: {{cc}}</h5>
+              <h6 class="card-title">Price: {{product.total_price}}</h5>
+                {% comment %} <form class="row g-3">
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label">{{product.quantity}}</label>
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="col-md-3">
+                    <label for="exampleFormControlInput1" class="form-label">{{product.price}}</label>
+                    <input type="text" class="form-control">
+                  </div>
+                </form>{% endcomment %}
+
+                <a href="{% url 'home:update_stocks' product.id %}" class="btn btn-primary">Update</a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'home:delete-stock' product.id %}" class="btn btn-danger"><i class="fas fa-trash"></i></a>
+                {% endif %}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div> 
+</div>
+{% endblock %}
