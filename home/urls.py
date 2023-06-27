@@ -14,5 +14,6 @@ urlpatterns = [
     path('signup/', register_user, name='signup'),
     path('category/<int:category_id>/<str:category_title>/', categories, name='category_detail'),
     path('add_qty/', add_qty, name='add_qty'),
+    path('add_category/', add_category, name='add_category'),
 
 ]

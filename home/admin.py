@@ -8,7 +8,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ['title','fa_image','status']
+    list_display = ['title','fa_image']
 
 
 admin.site.register(Product,ProductAdmin)

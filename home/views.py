@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render, get_object_or_404
 import json
 from django.http import JsonResponse
+from django.http import HttpResponseRedirect
 
 
 def home(request):
@@ -40,6 +41,18 @@ def categories(request, category_id, category_title):
     return render(request, 'index.html',context)
 
 
+def add_category(request):
+    if request.user.is_authenticated:
+        if request.method == 'POST':
+            title = request.POST['title']
+            fa_image = request.POST['fa_image']
+            data = Category.objects.create(
+                title = title,
+                fa_image = fa_image,
+            )
+            data.save()
+    return redirect('home:index')
+
 
 
 def add_qty(request):
@@ -57,7 +70,8 @@ def add_qty(request):
                 total_qty = quantity-added_qty
                 total_price = total_qty * price
             Product.objects.filter(id=product_id).update(quantity=total_qty, total_price=total_price)
-    return redirect('home:index')
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+    # return redirect('home:index')
 
 
 

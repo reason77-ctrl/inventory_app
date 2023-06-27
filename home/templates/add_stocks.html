@@ -2,37 +2,36 @@
 {% load crispy_forms_tags %}
 {% load static %}
 {% block content %}
-<div class="container">
-{% if user.is_authenticated %}
-<form id="productForm" class="row g-3" method="POST" action="" enctype="multipart/form-data">
-  {% csrf_token %}
-  {{form.total_price|as_crispy_field }}
-  <div class="col-md-6">
-    {{form.title|as_crispy_field }}
-    {% comment %} <label for="inputEmail4" class="form-label">Ema</label>
-    <input type="email" class="form-control" id="inputEmail4"> {% endcomment %}
+
+  <div class="stocks">
+    
+    {% if user.is_authenticated %}
+    <h1>Add Stocks</h1>
+    <form id="productForm" class="row g-3" method="POST" action="" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{form.total_price|as_crispy_field }}
+      <div class="col-6">
+        {{form.title|as_crispy_field }}
+      </div>
+      <div class="col-6">
+        {{form.image|as_crispy_field}}
+      </div>
+      <div class="col-4">
+        {{form.price|as_crispy_field}}
+      </div>
+      <div class="col-4">
+        {{form.quantity|as_crispy_field}}
+      </div>
+      <div class="col-4">
+        {{form.category|as_crispy_field}}
+      </div>
+      <div class="col-12">
+        {{form.description|as_crispy_field}}
+      </div>
+      <input type="submit" value="Add">
+    </form>
+    {% else %}
+    <h1>You must Login to view This Page</h1>
+    {% endif %}
   </div>
-  <div class="col-md-6">
-    {{form.image|as_crispy_field}}
-  </div>
-  <div class="col-md-6">
-    {{form.price|as_crispy_field}}
-  </div>
-  <div class="col-md-6">
-    {{form.quantity|as_crispy_field}}
-  </div>
-  <div class="col-6">
-    {{form.category|as_crispy_field}}
-  </div>
-  <div class="col-12">
-    {{form.description|as_crispy_field}}
-  </div>
-  <div class="col-12">
-    <button type="submit" class="btn btn-primary">Add</button>
-  </div>
-</form>
-{% else %}
-<h1>You must Login to view This Page</h1>
-{% endif %}
-</div>
 {% endblock %}

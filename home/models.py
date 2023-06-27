@@ -1,16 +1,15 @@
 from django.db import models
 from django.urls import reverse
 
-STATUS = (
-    ('active','active'),
-    ('inactive','inactive'),
-)
+# STATUS = (
+#     ('active','active'),
+#     ('inactive','inactive'),
+# )
 
 
 class Category(models.Model):
     title = models.CharField('Category Name', max_length=100)
     fa_image = models.CharField('Fas Fa Image',max_length=50)
-    status = models.CharField(choices=STATUS,max_length=50,blank=True)
 
     def __str__(self):
         return self.title
